@@ -1,0 +1,10 @@
+.settings-content-container {
+  width: 33vw;
+  margin-left: 30px;
+
+  .settings-form {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+}

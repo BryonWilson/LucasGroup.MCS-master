@@ -1,0 +1,8 @@
+{
+    "typescript.tsdk": "LucasGroup.MCS/wwwroot/node_modules/typescript/lib",
+    "yarn.packageJson": "LucasGroup.MCS/wwwroot",
+    "tslint.rulesDirectory": "LucasGroup.MCS/wwwroot/node_modules/codelyzer",
+    "tslint.nodePath": "LucasGroup.MCS/wwwroot/node_modules",
+    "tslint.packageManager": "yarn",
+    "git.ignoreLimitWarning": true
+}

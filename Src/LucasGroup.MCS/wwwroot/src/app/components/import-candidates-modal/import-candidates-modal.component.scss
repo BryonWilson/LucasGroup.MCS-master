@@ -1,0 +1,9 @@
+.import-candidates-modal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .candidate-import-select {
+    width: 25vw;
+  }
+}

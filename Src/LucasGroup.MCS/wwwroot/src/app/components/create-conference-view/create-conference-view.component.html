@@ -1,0 +1,123 @@
+<div class="create-content-container">
+  <div class="conference-information-section">
+    <div class="conference-information-title" *ngIf="!conferenceName">Conference Information</div>
+    <div class="conference-information-title" *ngIf="conferenceName">Conference Information - {{conferenceName}}</div>
+    <div class="conference-information-container mat-elevation-z8">
+      <div class="conference-information">
+        <div class="start-date-section conference-information-inputs">
+          <label>Conference Name</label>
+          <input (blur)="onKeyUpConferenceName($event); checkIfFormComplete()" [value]="conferenceName ? conferenceName : ''" />
+        </div>
+        <div class="start-date-section conference-information-inputs">
+          <label id="start-date-label">Start Date</label>
+          <input id="start-date-input" [min]="minDate" [matDatepicker]="startDatePicker" [value]="startDate.value" (dateChange)="updateStartDate($event); checkIfFormComplete()">
+          <mat-datepicker-toggle [for]="startDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker></mat-datepicker>
+        </div>
+        <div class="end-date-section conference-information-inputs">
+          <label id="end-date-label-label">End Date</label>
+          <input id="end-date-label-input" [min]="startDate.value" [matDatepicker]="endDatePicker" [value]="endDate.value" (dateChange)="updateEndDate($event); checkIfFormComplete()">
+          <mat-datepicker-toggle [for]="endDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #endDatePicker></mat-datepicker>
+        </div>
+        <div class="default-start-time conference-information-inputs">
+          <label id="default-start-time-label">Default Start Time</label>
+          <input id="default-start-time-input" type="time" [(value)]="defaultStartTime" (change)="defaultStartTime=$event.target.value; checkIfFormComplete()">
+        </div>
+        <div class="default-session-interval conference-information-inputs">
+          <label id="default-session-interval-label">Default Session Interval</label>
+          <mat-form-field id="default-session-interval-input">
+            <mat-select placeholder="Session Interval" [(value)]="defaultSessionInterval" (selectionChange)="checkIfFormComplete()">
+              <mat-option value="15">15 mins</mat-option>
+              <mat-option value="30">30 mins</mat-option>
+              <mat-option value="45">45 mins</mat-option>
+              <mat-option value="60">60 mins</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tables-section">
+    <div class="jobs-imported-table-section">
+      <div class="jobs-imported-table-container">
+        <div class="jobs-buttons-container">
+          <div class="jobs-buttons">
+            <button mat-raised-button (click)="openJobsImportModal()">Import Jobs</button>
+          </div>
+          <!--<div class="jobs-buttons"><button mat-raised-button>Add Job</button></div>-->
+        </div>
+        <div class="jobs-imported-table">
+          <div class="example-container mat-elevation-z8">
+            <mat-table #table [dataSource]="jobDataSource" matSort>
+
+              <ng-container matColumnDef="JobId">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Job ID </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.bullhornJobOrderId ? element.bullhornJobOrderId : element.id}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="JobTitle">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Job Title </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="CustomStartTime">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Custom Start Time </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.customStartTime}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="Details">
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="detail-header"> Detail </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="detail-icon-cell">
+                  <mat-icon class="info-icon" (click)="handleJobDetailClick(element)">info</mat-icon>
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="jobDisplayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: jobDisplayedColumns;"></mat-row>
+            </mat-table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="candidates-imported-table-section">
+      <div class="candidates-imported-table-container">
+        <div class="candidates-buttons-container">
+          <div class="candidates-buttons">
+            <button mat-raised-button (click)="openCandidatesImportModal()">Import Candidates</button>
+          </div>
+          <!--<div class="candidates-buttons"><button mat-raised-button>Add Candidate</button></div>-->
+        </div>
+        <div class="candidates-imported-table">
+          <div class="example-container mat-elevation-z8">
+            <mat-table #table [dataSource]="candidateDataSource" matSort>
+
+              <ng-container matColumnDef="PeopleId">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> People ID </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.candidate ? element.candidate.bullhornCandidateId : element.id}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="FirstName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> First Name </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.candidate ? element.candidate.firstName : element.firstName}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="LastName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.candidate ? element.candidate.lastName : element.lastName}} </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="candidateDisplayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: candidateDisplayedColumns;"></mat-row>
+            </mat-table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="start-matching-button-container">
+      <button mat-raised-button matStepperNext class="start-matching-button" (click)="updateConference()" *ngIf="!startMatchingButtonDisabled">Start Matching</button>
+      <button mat-raised-button matStepperNext class="start-matching-button" *ngIf="startMatchingButtonDisabled" disabled>Start Matching</button>
+      <div class="form-not-complete-error-message" *ngIf="startMatchingButtonDisabled">Please finish filling out form before navigating to the next page</div>
+    </div>
+  </div>
+</div>

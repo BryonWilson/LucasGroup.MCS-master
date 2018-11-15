@@ -1,0 +1,39 @@
+<div class="content-container">
+
+    <mat-card>
+        <mat-card-title>
+            <h2>Administration - Users List</h2>
+        </mat-card-title>
+        <mat-card-content>
+            <mat-table #table [dataSource]="usersDataSource" matSort>
+                <!-- Email Column -->
+                <ng-container matColumnDef="Email">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+                    <mat-cell *matCellDef="let data"> {{data.email}} </mat-cell>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="Name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+                    <mat-cell *matCellDef="let data"> {{data.firstName + ' ' + data.lastName}} </mat-cell>
+                </ng-container>
+
+                <!-- BranchId Column -->
+                <ng-container matColumnDef="BranchId">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Branch ID</mat-header-cell>
+                    <mat-cell *matCellDef="let data"> {{data.branchId}} </mat-cell>
+                </ng-container>
+
+                <!-- BullhornId Column -->
+                <ng-container matColumnDef="BullhornId">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Bullhorn Id</mat-header-cell>
+                    <mat-cell *matCellDef="let data"> {{data.bullhornUserId}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayColumns;" (click)="selectRow(row)" class="user-table-row"></mat-row>
+            </mat-table>
+        </mat-card-content>
+    </mat-card>
+    <mat-paginator #paginator [length]="totalSize" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons [pageIndex]="currentPage" (page)="pageEvent = handlePage($event)"></mat-paginator>
+</div>

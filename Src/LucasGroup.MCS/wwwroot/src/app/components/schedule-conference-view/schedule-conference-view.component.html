@@ -1,0 +1,81 @@
+<div>
+  <mat-card>
+    <mat-card-title>
+      <div class="schedule-title">Schedule Information</div>
+    </mat-card-title>
+    <mat-card-content>
+      <div class="">
+        <label id="start-date-label">Start Date</label>
+        <input id="start-date-input" [matDatepicker]="startDatePicker">
+        <mat-datepicker-toggle [for]="startDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker></mat-datepicker>
+      </div>
+      <div class="">
+        <label id="end-date-label-label">End Date</label>
+        <input id="end-date-label-input" [matDatepicker]="endDatePicker">
+        <mat-datepicker-toggle [for]="endDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker></mat-datepicker>
+      </div>
+      <div class="">
+        <label>Default Start Time</label>
+      </div>
+      <div class="">
+        <label>Default Session Interval</label>
+        <mat-form-field id="default-session-interval-input">
+          <mat-select placeholder="Session Interval">
+            <mat-option *ngFor="let interval of defaultSessionIntervals" [value]="interval">
+              {{ interval }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <button mat-raised-button>Generate Schedule</button>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-title>
+      <div class="schedule-title">Generated Schedule</div>
+    </mat-card-title>
+    <mat-card-content>
+      <mat-table #table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="JobTitle">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Job</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.jobTitle}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="ClientName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Client</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.clientName}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="StartTime">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Start Time</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.startTime}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="EndTime">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>End Time</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.endTime}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Length">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Length</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.length}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Candidate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Candidate</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.candidate}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+      <button mat-raised-button matStepperPrevious>Previous</button>
+      <button mat-raised-button>Generate Schedule</button>
+    </mat-card-content>
+  </mat-card>
+
+</div>

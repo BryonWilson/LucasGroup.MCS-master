@@ -1,0 +1,102 @@
+<div class="job-detail-modal-container">
+  <div class="modal-header-section">
+    <h1 class="modal-header">Job Details</h1>
+  </div>
+  <div class="override-container">
+    <div class="override-section-title">Override Conference Parameters</div>
+    <div class="override-section">
+      <div class="override-start-time-container override-inputs">
+        <label id="start-time-label override-input-label">Override Start Time</label>
+        <input id="default-start-time-input" [matDatepicker]="defaultStartTimePicker" type="time">
+      </div>
+      <div class="override-interval-container override-inputs">
+        <label id="interval-label override-input-label">Override Session Interval</label>
+        <mat-form-field id="default-session-interval-input">
+          <mat-select placeholder="Session Interval">
+            <mat-option *ngFor="let interval of defaultSessionIntervals" [value]="interval">
+              {{ interval }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="override-warning-container override-inputs">
+        <div class="warning-text-section">
+          Note that these parameters apply to all jobs for this client.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="job-information-parent-container" *ngIf="jobDetails">
+    <div class="left-job-information-container">
+      <div class="job-information-section-title">Job Information</div>
+      <div class="job-information-section">
+        <div class="job-information">
+          Bullhorn Job ID: {{ jobDetails.id }}
+        </div>
+        <div class="job-information">
+          Position: {{ jobDetails.title }}
+        </div>
+        <div class="job-information">
+          Locations:
+        </div>
+        <div class="job-information">
+          Salary:
+        </div>
+        <div class="job-information">
+          Requirements:
+        </div>
+        <div class="job-information">
+          POC:
+        </div>
+        <div class="job-information">
+          Account Rep:
+        </div>
+        <div class="job-information">
+          Description: {{ jobDetails.description }}
+        </div>
+      </div>
+      <div class="button-container">
+        <button mat-raised-button (click)="handleSave()">Save</button>
+        <button mat-raised-button (click)="closeDialog()">Close</button>
+      </div>
+    </div>
+    <div class="right-client-information-container">
+      <div class="client-information-section-title">Client Information</div>
+      <div class="client-information-section">
+        <div class="client-information">
+          <label id="start-date-label">Client Name: </label>
+          <input id="start-date-input" [value]="jobDetails.clientCorporation.name" />
+        </div>
+        <div class="client-information">
+          <label id="start-date-label">Client ID:</label>
+          <input id="start-date-input" [value]="jobDetails.clientCorporation.id" />
+        </div>
+        <div class="client-information">
+          <label id="start-date-label">Phone:</label>
+          <input id="start-date-input" [value]="jobDetails.clientCorporation.phone" />
+        </div>
+        <div class="client-information">
+          <label id="start-date-label">Fax:</label>
+          <input id="start-date-input" [value]="jobDetails.clientCorporation.fax" />
+        </div>
+        <div class="client-information">
+          <label id="start-date-label">Street Address:</label>
+          <input id="start-date-input" [value]="jobDetails.address.city + ', ' + jobDetails.address.state" />
+        </div>
+        <div class="client-information">
+          <label id="start-date-label">Interviewer:</label>
+          <input id="start-date-input" [value]="jobDetails.clientContact.firstName + ' ' + jobDetails.clientContact.lastName" (keyup)="handleNameChange($event)"
+          />
+        </div>
+        <div class="client-information">
+          <label id="start-date-label">Interview Room:</label>
+          <input id="start-date-input" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!jobDetails" class="job-detail-modal-spinner">
+    <mat-spinner></mat-spinner>
+    <div>One moment please...</div>
+  </div>
+</div>

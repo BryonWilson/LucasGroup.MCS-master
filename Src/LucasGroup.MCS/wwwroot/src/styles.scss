@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import 'variables';
+@import 'reset';
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '../node_modules/angular-calendar/scss/angular-calendar.scss';
+@import '../node_modules/font-awesome/scss/font-awesome.scss';
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body {
+  font-family: $font;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.left-icon {
+  padding-right: 0.25rem;
+}
+
+.right-icon {
+  padding-left: 0.25rem;
+}
+
+.nav-icon {
+  font-size: 2rem;
+}
+
+.content-container {
+  margin: 0.1rem;
+  padding: 1rem;
+  // overflow-y: auto;
+}
+.mat-horizontal-stepper-header {
+  pointer-events: none !important;
+}

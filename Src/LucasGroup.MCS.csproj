@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <FrontEndLocalPath>wwwroot\</FrontEndLocalPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- extends watching group to include *.ts files -->
+    <Watch Include="**\*.ts" Exclude="node_modules\**\*.ts;$(DefaultExcludes)" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Files not to show in IDE -->
+    <None Remove="yarn.lock" />
+
+    <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
+    <Content Remove="wwwroot\**" />
+  </ItemGroup>
+
+  <Target Name="DebugRunNgBuild" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug'"> <!--  And !Exists('wwwroot\dist')  -->
+    <Message Condition="'$(DotNetWatchBuild)'!='true'" Importance="high" Text="dotnet-watch not enabled. To enable, re-run with 'dotnet watch run'" />
+    <!-- Ensure Node.js is installed -->
+    <Message Importance="high" Text="Checking nodejs version installed:" />
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Checking yarn version installed:" />
+    <Exec Command="yarn -v" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="YarnErrorCode" />
+    </Exec>
+    <Error Condition="'$(YarnErrorCode)' != '0'" Text="This project is configured to use yarn for package management. To continue, please install yarn from https://yarnpkg.com/, and then restart your command prompt or IDE." />
+    <!-- In development, the dist files won't exist on the first run or when cloning to
+         a different machine, so rebuild them if not already present. -->
+    <Message Importance="high" Text="Performing package installs with Yarn" />
+    <exec command="yarn" WorkingDirectory="$(FrontEndLocalPath)" />
+    
+  </Target>
+
+  <!-- <Message Importance="high" Text="Performing Ng-CLI build..." />
+    <Exec Command="yarn build-prod-ngsw " WorkingDirectory="$(FrontEndLocalPath)" />
+    <ItemGroup>
+      <DistFiles Include="wwwroot\dist\**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup> -->
+
+</Project>

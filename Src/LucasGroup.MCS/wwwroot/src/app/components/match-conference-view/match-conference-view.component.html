@@ -1,0 +1,146 @@
+<div class="match-content-container">
+  <div class="conference-information-section">
+    <div class="conference-information-container">
+      <div class="start-date-section conference-information-inputs">
+        <label id="start-date-label">Start Date</label>
+        <input id="start-date-input" [matDatepicker]="startDatePicker" [value]="startDate.value" (dateChange)="updateStartDate($event)">
+        <mat-datepicker-toggle [for]="startDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker></mat-datepicker>
+      </div>
+      <div class="end-date-section conference-information-inputs">
+        <label id="end-date-label-label">End Date</label>
+        <input id="end-date-label-input" [matDatepicker]="endDatePicker" [value]="endDate.value" (dateChange)="updateEndDate($event)">
+        <mat-datepicker-toggle [for]="endDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker></mat-datepicker>
+      </div>
+      <div class="default-start-time conference-information-inputs">
+        <label id="default-start-time-label">Default Start Time</label>
+        <input id="default-start-time-input" type="time" [(value)]="defaultStartTime" (change)="defaultStartTime=$event.target.value">
+      </div>
+      <div class="default-session-interval conference-information-inputs">
+        <label id="default-session-interval-label">Default Session Interval</label>
+        <mat-form-field id="default-session-interval-input">
+          <mat-select placeholder="Session Interval" [(value)]="defaultSessionInterval">
+            <mat-option value="15">15 mins</mat-option>
+            <mat-option value="30">30 mins</mat-option>
+            <mat-option value="45">45 mins</mat-option>
+            <mat-option value="60">60 mins</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="candidates-and-jobs-section">
+    <div class="candidates-and-jobs-container">
+      <div class="select-tables-section">
+        <div class="select-tables-section-top">
+          <div class="select-client-section">
+            <div class="select-client-container">
+              <div class="table-titles">Select A Client</div>
+              <div style="height: 250px; overflow: scroll">
+                <table class="table table-hover mat-elevation-z8">
+                  <tbody>
+                    <tr *ngFor="let client of clients; let i = index" (click)="setClickedRowClient(i)" [class.active]="i == selectedRowClientIndex">
+                      <td style="padding: 5px;">{{client.name}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="select-job-section">
+            <div class="select-job-container">
+              <div class="table-titles">Select A Job</div>
+              <div style="height: 250px; overflow: scroll">
+                <table class="table table-hover mat-elevation-z8">
+                  <tbody>
+                    <tr *ngFor="let job of jobs; let i = index" (click)="setClickedRowJob(i)" [class.active]="i == selectedRowJobIndex">
+                      <td style="padding: 5px">{{job.title}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="select-candidate-for-job-section">
+            <div class="select-candidate-for-job-container">
+              <div class="table-titles">Select Candidate(s) for this Job</div>
+              <div style="max-height: 250px; overflow: scroll">
+                <table class="table table-hover mat-elevation-z8">
+                  <tbody>
+                    <tr *ngFor="let candidate of candidates; let i = index" (click)="setClickedRowCandidate(i)" [class.active]="i == selectedRowCandidateIndex">
+                      <td style="padding: 5px">{{candidate.candidate ? candidate.candidate.lastName : candidate.lastName}}, {{ candidate.candidate
+                        ? candidate.candidate.firstName : candidate.firstName}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="add-selected-candidates-button-container">
+                <button mat-raised-button (click)="handleAddCandidateClick()">Add selected candidates</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="select-tables-section-bottom">
+          <div class="bottom-star-text">* These clients have conference parameter overrides - see conference details for more information</div>
+          <button mat-raised-button matStepperPrevious>Previous</button>
+        </div>
+      </div>
+      <div class="candidates-selected-table-section">
+        <div class="candidates-selected-table-container">
+          <div class="candidates-selected-table">
+            <div class="candidates-selected-table-title" *ngIf="candidates && jobs">{{listOfSelectedCandidates.length}} Candidates selected for {{listOfSelectedJobs.length}} Job{{listOfSelectedJobs.length
+              > 0 ? 's' : ''}}</div>
+            <div class="example-container mat-elevation-z8">
+              <mat-table #table [dataSource]="dataSource" matSort>
+                <!-- Job Column -->
+                <ng-container matColumnDef="Job">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Job </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.job}} </mat-cell>
+                </ng-container>
+                <!-- Client Column -->
+                <ng-container matColumnDef="Client">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Client </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.client.name}} </mat-cell>
+                </ng-container>
+                <!-- Candidate Column -->
+                <ng-container matColumnDef="Candidate">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Candidate </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.candidate}} </mat-cell>
+                </ng-container>
+                <!-- Checkbox Column -->
+                                    <!-- [checked]="allSelectionData.length > 0 && isAllSelected()"
+                                    [indeterminate]="allSelectionData.length > 0 && !isAllSelected()"> -->
+                <ng-container class="select-container" matColumnDef="Select">
+                  <mat-header-cell *matHeaderCellDef>
+                    <span>
+                      Select All
+                      <mat-checkbox (change)="$event ? masterToggle() : null"
+                                    [checked]="allSelectionData.length > 0 && isAllSelected()"
+                                    [indeterminate]="allSelectionData.length > 0 && !isAllSelected()">
+                      </mat-checkbox>
+                    </span>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <mat-checkbox (click)="$event.stopPropagation()"
+                                  (change)="onToggleSelectedData(element)"
+                                  [checked]="element.selected">
+                    </mat-checkbox>
+                  </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
+              </mat-table>
+            </div>
+
+            <div class="candidates-selected-table-buttons-container">
+              <button mat-raised-button (click)="handleRemoveCandidateClick()">Remove selected candidates</button>
+              <button mat-raised-button matStepperNext (click)="updateConference()">Post to Bullhorn</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

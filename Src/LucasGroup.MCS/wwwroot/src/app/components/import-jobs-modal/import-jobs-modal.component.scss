@@ -1,0 +1,9 @@
+.import-jobs-modal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .jobs-modal-select {
+    width: 25vw;
+  }
+}

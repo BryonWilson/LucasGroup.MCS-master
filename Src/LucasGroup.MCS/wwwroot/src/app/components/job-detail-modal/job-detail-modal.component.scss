@@ -1,0 +1,82 @@
+.job-detail-modal-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  .modal-header-section {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border-bottom: 2px solid black;
+
+    .modal-header {
+      font-size: 25px;
+      margin-bottom: 25px;
+    }
+  }
+  .override-container {
+    .override-section-title {
+      margin-top: 15px;
+    }
+
+    .override-section {
+      display: flex;
+      flex: 1;
+      justify-content: space-evenly;
+      border: 1px solid black;
+      margin-bottom: 12px;
+
+      .override-inputs {
+        flex-direction: row;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+  .job-information-parent-container {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .left-job-information-container {
+      display: flex;
+      flex-direction: column;
+      flex: 0.5;
+
+      .job-information-section {
+        border: 1px solid black;
+
+        .job-information {
+          padding: 10px 0px 10px 5px;
+        }
+      }
+
+      .button-container {
+        margin-top: 10px;
+      }
+    }
+
+    .right-client-information-container {
+      flex-direction: column;
+      display: flex;
+      flex: 0.4;
+
+      .client-information-section {
+        border: 1px solid black;
+
+        .client-information {
+          padding: 10px 0px 10px 5px;
+        }
+      }
+    }
+  }
+
+  .job-detail-modal-spinner {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+  }
+}

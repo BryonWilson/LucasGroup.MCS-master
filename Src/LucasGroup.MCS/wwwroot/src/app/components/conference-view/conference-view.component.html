@@ -1,0 +1,19 @@
+<div class="content-container">
+  <mat-horizontal-stepper>
+    <!--show create if there is no branchId as a url param, if there is one show Edit Conf-->
+    <mat-step label="Create" *ngIf="!conferenceId">
+      <app-create-conference-view (jobTearSheetId)="jobTearsheetId=$event" (candidateSheetId)="candidateTearsheetId=$event"></app-create-conference-view>
+    </mat-step>
+    <mat-step label="Edit Conf" *ngIf="conferenceId">
+      <app-create-conference-view (jobTearSheetId)="jobTearsheetId=$event" (candidateSheetId)="candidateTearsheetId=$event" (currentCandidateData)="currentCandidateData=$event"
+        (currentJobData)="currentJobData=$event"></app-create-conference-view>
+    </mat-step>
+    <mat-step label="Match">
+      <app-match-conference-view [jobTearsheetId]="jobTearsheetId" [candidateTearsheetId]="candidateTearsheetId" [currentCandidateData]="currentCandidateData"
+        [currentJobData]="currentJobData"></app-match-conference-view>
+    </mat-step>
+    <mat-step label="Post to Bullhorn">
+      <app-post-to-bullhorn-modal></app-post-to-bullhorn-modal>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

@@ -1,0 +1,53 @@
+<mat-sidenav-container fullscreen>
+  <mat-sidenav #sideNav mode="side" class="side-nav">
+    <div *ngIf="isLoggedIn">
+      <div class="nav-header" (click)="sideNav.toggle()">
+        <i class="fas fa-bars"></i>
+      </div>
+      <div>
+        <p>
+          <a mat-button [routerLink]="['home']">
+            <i class="fas fa-th nav-icon"></i>
+            <br/>Conferences</a>
+        </p>
+        <p>
+          <a mat-button [routerLink]="['conference']">
+            <i class="fas fa-plus nav-icon"></i>
+            <br/>Add Conference</a>
+        </p>
+      </div>
+      <div class="nav-footer">
+        <p>
+          <a mat-button [routerLink]="['settings']">
+            <i class="fas fa-cogs nav-icon"></i>
+            <br/>Settings</a>
+        </p>
+        <div [ngClass]="getOnlineStatus()">
+          <div *ngIf="isOnline">
+            <p>Online
+              <i class="fa fa-power-off right-icon"></i>
+            </p>
+          </div>
+          <div *ngIf="!isOnline">
+            <p>Offline
+              <i class="fa fa-power-off right-icon"></i>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content fullscreen>
+    <div class="top-bar" *ngIf="isLoggedIn">
+      <div *ngIf="!sideNav.opened" class="collapsed-side-nav" (click)="sideNav.toggle()">
+        <i class="fas fa-bars click-icon"></i>
+      </div>
+      <div class="user-info">
+        <a *ngIf="isAdmin()" mat-button routerLink="/admin" routerLinkActive="active">Admin</a>
+        <a *ngIf="isAdmin()" mat-button routerLink="/register" routerLinkActive="active">Add User</a>
+        <a mat-button class="logout" (click)="logout()">Log Out</a>
+      </div>
+    </div>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

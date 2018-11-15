@@ -1,0 +1,26 @@
+<div class="import-jobs-modal-container">
+  <div class="import-jobs-modal-title-section">
+    <div>Import Jobs from Bullhorn</div>
+  </div>
+  <div class="import-jobs-modal-text-section">
+    <div class="select-tearsheet-text">
+      {{ data.user?.firstName }} {{ data.user?.lastName }} - Bullhorn Owner ID {{ data.user?.bullhornUserId }}
+    </div>
+    <div class="select-tearsheet-text">
+      Please select a tearsheet to import your Jobs from
+    </div>
+  </div>
+  <div class="tearsheet-select-section">
+    <mat-form-field class="jobs-modal-select">
+      <mat-select placeholder="Select Tearsheet" [(value)]="selectedOption">
+        <mat-option *ngFor="let selectOption of selectOptions" [value]="selectOption.value">
+          {{ selectOption.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="import-jobs-modal-buttons-section">
+    <button mat-raised-button (click)="closeDialog()">Cancel</button>
+    <button mat-raised-button [mat-dialog-close]="selectedOption">Import</button>
+  </div>
+</div>

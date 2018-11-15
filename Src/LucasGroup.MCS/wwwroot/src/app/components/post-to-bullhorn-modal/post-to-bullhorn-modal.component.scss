@@ -1,0 +1,39 @@
+.post-to-bullhorn-modal-container {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  flex-direction: column;
+
+  .modal-header {
+    display: flex;
+    justify-content: center;
+    border-bottom: 2px solid black;
+    width: 100%;
+    margin-bottom: 50px;
+
+    .modal-title {
+      font-size: 25px;
+      margin-bottom: 25px;
+    }
+  }
+  .top-info-section {
+    display: flex;
+    justify-content: space-between;
+
+    .info-text {
+      margin-bottom: 15px;
+    }
+
+    .select-all-checkbox {
+      margin-right: 14vw;
+    }
+  }
+
+  .data-tabel-section {
+    margin-bottom: 50px;
+
+    .checkbox-cell {
+      overflow: inherit;
+    }
+  }
+}

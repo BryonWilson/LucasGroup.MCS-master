@@ -1,0 +1,50 @@
+<div class="post-to-bullhorn-modal-container">
+  <div class="modal-header">
+    <h1 class="modal-title">Post to Bullhorn</h1>
+  </div>
+  <div class="top-info-section">
+    <div class="info-text">
+      <p>Select the job/candidate matches you want to post to Bullhorn</p>
+    </div>
+
+    <div class="select-all-checkbox">
+      <mat-checkbox>Select All</mat-checkbox>
+    </div>
+  </div>
+  <div class="data-tabel-section">
+    <mat-table #table [dataSource]="this.dataSource" matSort>
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="Client">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Client </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.client.name}} </mat-cell>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="Job">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Job </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.job}} </mat-cell>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="Candidate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Candidate </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.candidate}} </mat-cell>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="Post to Bullhorn">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Post to Bullhorn </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="checkbox-cell">
+          <mat-checkbox (change)="handleCheckClick(element, $event)"></mat-checkbox>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+  <div class="add-selected-candidates-button-container">
+    <button mat-raised-button matStepperPrevious>Close</button>
+    <button mat-raised-button [disabled]="itemsToPostToBullhorn.length <= 0" (click)="handlePostToBullhorn(itemsToPostToBullhorn)">Post to Bullhorn</button>
+  </div>
+</div>

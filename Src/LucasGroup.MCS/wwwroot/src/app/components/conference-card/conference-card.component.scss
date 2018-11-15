@@ -1,0 +1,21 @@
+
+mat-grid-tile {
+    font-size: 1.25rem;
+
+    > ::ng-deep figure {
+        display: block !important;
+    }
+
+    span {
+        font-size: .7rem;
+    }
+}
+
+.cc-content {
+    padding-top: .75rem;
+    height: 9rem;
+}
+
+.conference-card {
+  cursor: pointer;
+}

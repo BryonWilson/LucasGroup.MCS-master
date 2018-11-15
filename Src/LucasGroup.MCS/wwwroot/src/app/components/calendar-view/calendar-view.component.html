@@ -1,0 +1,13 @@
+<div class="content-container">
+  <!-- <mat-slide-toggle (change)="setValue($event)">
+    <label>Include Past Conferences</label>
+  </mat-slide-toggle> -->
+  <div *ngIf="conferences.length === 0">
+    <p>No Conferences Found!</p>
+  </div>
+  <mat-grid-list cols="3" rowHeight="1:.6">
+    <mat-grid-tile *ngFor="let c of conferences">
+      <app-conference-card class="conference-card" [conference]="c" [routerLink]="['/conference', c.id]"></app-conference-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

@@ -1,0 +1,126 @@
+.create-content-container {
+  height: 700px;
+  display: flex;
+
+  .conference-information-section {
+    flex: 5;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 70px;
+
+    .conference-information-title {
+      margin-top: -30px;
+      padding-bottom: 10px;
+    }
+
+    .conference-information-container {
+      height: 350px;
+      width: 84%;
+      min-width: 400px;
+      display: flex;
+      justify-content: center;
+      margin-left: 8px;
+
+      .conference-information-inputs {
+        margin-top: 20px;
+      }
+    }
+  }
+  .tables-section {
+    flex: 11;
+    flex-direction: column;
+    display: flex;
+
+    .jobs-imported-table-section {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+
+      .jobs-imported-table-container {
+        height: 200px;
+        width: 100%;
+        display: flex;
+        padding-bottom: 30px;
+        padding-right: 20px;
+
+        .jobs-buttons-container {
+          flex: 1;
+
+          .jobs-buttons {
+            padding: 12px;
+          }
+        }
+        .jobs-imported-table {
+          flex: 4;
+        }
+      }
+    }
+    .candidates-imported-table-section {
+      flex: 1.2;
+      display: flex;
+
+      .candidates-imported-table-container {
+        height: 300px;
+        width: 100%;
+        display: flex;
+        padding-right: 20px;
+
+        .candidates-buttons-container {
+          flex: 1;
+
+          .candidates-buttons {
+            padding: 12px;
+          }
+        }
+        .candidates-imported-table {
+          flex: 4;
+        }
+      }
+    }
+    .start-matching-button-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 20px;
+      padding-right: 20px;
+    }
+  }
+  .example-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+    height: 100%;
+
+    .detail-header {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .detail-icon-cell {
+      display: flex;
+      justify-content: flex-end;
+
+      .info-icon {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .example-header {
+    min-height: 64px;
+    padding: 8px 24px 0;
+  }
+
+  .mat-form-field {
+    font-size: 14px;
+  }
+
+  .mat-table {
+    overflow: auto;
+    max-height: 500px;
+  }
+  .form-not-complete-error-message {
+    color: red;
+  }
+}

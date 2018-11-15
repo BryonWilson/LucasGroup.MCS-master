@@ -1,0 +1,180 @@
+.match-content-container {
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+
+  .conference-information-section {
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+
+    .conference-information-container {
+      height: 60px;
+      display: flex;
+      border: solid black 1px;
+
+      .conference-information-inputs {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+
+        label {
+          padding: 5px;
+        }
+      }
+    }
+  }
+
+  .candidates-and-jobs-section {
+    flex: 5;
+    align-items: center;
+    justify-content: center;
+
+    .candidates-and-jobs-container {
+      height: 450px;
+      display: flex;
+      border: solid black 1px;
+
+      .select-tables-section {
+        flex: 1.5;
+        display: flex;
+        flex-direction: column;
+
+        .select-tables-section-top {
+          flex: 7;
+          display: flex;
+
+          .select-client-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .select-client-container {
+              width: 80%;
+            }
+          }
+
+          .select-job-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+
+          .select-job-section {
+            flex: 1.5;
+
+            .select-job-container {
+              width: 80%;
+            }
+          }
+
+          .select-candidate-for-job-section {
+            flex: 1.3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .select-candidate-for-job-container {
+              width: 80%;
+
+              .add-selected-candidates-button-container {
+                padding-top: 20px;
+              }
+            }
+          }
+        }
+
+        .select-tables-section-bottom {
+          flex: 1;
+          padding-left: 20px;
+          padding-bottom: 10px;
+
+          .bottom-star-text {
+            padding-bottom: 13px;
+          }
+        }
+      }
+
+      .candidates-selected-table-section {
+        flex: 1;
+        justify-content: center;
+        align-items: center;
+
+        .candidates-selected-table-container {
+          height: 100%;
+          min-width: 250px;
+          width: 80%;
+          display: flex;
+          margin: 0 auto;
+
+          .candidates-selected-table {
+            flex: 1;
+            height: 70%;
+            margin-top: 30px;
+
+            .selectedItemToRemove {
+              background-color: red;
+            }
+
+            .candidates-selected-table-title {
+              margin-bottom: 10px;
+            }
+
+            .candidates-selected-table-buttons-container {
+              padding-top: 20px;
+              display: flex;
+              justify-content: space-between;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .table {
+    border: solid black 1px;
+    height: 200px;
+    width: 100%;
+  }
+
+  .table tr.active td {
+    background-color: #123456 !important;
+    color: white;
+  }
+
+  .example-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+    height: 100%;
+  }
+
+  .example-header {
+    min-height: 64px;
+    padding: 8px 8px 0;
+  }
+
+  .mat-form-field {
+    font-size: 14px;
+  }
+
+  .mat-table {
+    overflow: auto;
+    max-height: 500px;
+  }
+
+  .table-titles {
+    margin-bottom: 10px;
+  }
+
+  .mat-column-Select {
+    display: flex;
+    max-width: 28px;
+    padding-right: 10px;
+    text-align: center;
+    justify-content: center;
+  }
+}

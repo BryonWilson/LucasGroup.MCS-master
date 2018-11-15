@@ -1,0 +1,261 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <FrontEndLocalPath>wwwroot\</FrontEndLocalPath>
+    <StartupObject>LucasGroup.MCS.Program</StartupObject>
+    <Configurations>Debug;Release;QA</Configurations>
+    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+  <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
+</PropertyGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Update="appsettings.Development.json" CopyToOutputDirectory="PreserveNewest" Condition="'$(Configuration)' == 'Debug'" />
+    <Content Update="appsetting.$(Configuration).json" CopyToPublishDirectory="PreserveNewest" Condition="'$(Configuration)' != 'Debug'" />
+    <Content Update="Web.$(Configuration).config" Link="Web.config" CopyToPublishDirectory="PreserveNewest" Condition="'$(Configuration)' != 'Debug'" />
+    <Content Update="nlog.config" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Flurl.Http" Version="2.3.1" />
+    <!--<PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />-->
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.4" />
+    <PackageReference Include="NewtonSoft.Json" Version="11.0.2" />
+    <PackageReference Include="Nlog.Web.AspNetCore" Version="4.5.4" />
+    <PackageReference Include="Sendgrid" Version="9.9.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- extends watching group to include *.ts files -->
+    <Watch Include="**\*.ts" Exclude="node_modules\**\*.ts;$(DefaultExcludes)" />
+    <!-- extends watching group to include *.scss files -->
+    <Watch Include="**/*.scss" Excludes="node_modules\**\*.scss;$(DefaultExcludes)" />
+    <!-- extends watching group to include *.html files -->
+    <Watch Include="**/*.html" Excludes="node_modules\**\*.html;$(DefaultExcludes)" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Files not to show in IDE -->
+    <None Remove="yarn.lock" />
+
+    <!-- Files not to publish (note that the 'dist' subfolders are re-added below when this is a production build) -->
+    <Content Remove="wwwroot\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="wwwroot\.angular-cli.json" />
+    <Content Include="wwwroot\.idea\vcs.xml" />
+    <Content Include="wwwroot\e2e\tsconfig.e2e.json" />
+    <Content Include="wwwroot\package.json" />
+    <Content Include="wwwroot\src\app\app.component.html" />
+    <Content Include="wwwroot\src\app\components\access-denied\access-denied.component.html" />
+    <Content Include="wwwroot\src\app\components\add-job-view\add-job-view.component.html" />
+    <Content Include="wwwroot\src\app\components\admin-view\admin-view.component.html" />
+    <Content Include="wwwroot\src\app\components\calendar-view\calendar-view.component.html" />
+    <Content Include="wwwroot\src\app\components\conference-card\conference-card.component.html" />
+    <Content Include="wwwroot\src\app\components\conference-view\conference-view.component.html" />
+    <Content Include="wwwroot\src\app\components\create-conference-view\create-conference-view.component.html" />
+    <Content Include="wwwroot\src\app\components\forgot-password-view\forgot-password-view.component.html" />
+    <Content Include="wwwroot\src\app\components\import-candidates-modal\import-candidates-modal.component.html" />
+    <Content Include="wwwroot\src\app\components\import-jobs-modal\import-jobs-modal.component.html" />
+    <Content Include="wwwroot\src\app\components\job-detail-modal\job-detail-modal.component.html" />
+    <Content Include="wwwroot\src\app\components\login-view\login-view.component.html" />
+    <Content Include="wwwroot\src\app\components\match-conference-view\match-conference-view.component.html" />
+    <Content Include="wwwroot\src\app\components\page-not-found\page-not-found.component.html" />
+    <Content Include="wwwroot\src\app\components\participant-card\participant-card.component.html" />
+    <Content Include="wwwroot\src\app\components\post-to-bullhorn-modal\post-to-bullhorn-modal.component.html" />
+    <Content Include="wwwroot\src\app\components\print-and-save-conference-view\print-and-save-conference-view.component.html" />
+    <Content Include="wwwroot\src\app\components\register-view\register-view.component.html" />
+    <Content Include="wwwroot\src\app\components\schedule-conference-view\schedule-conference-view.component.html" />
+    <Content Include="wwwroot\src\app\components\settings-view\settings-view.component.html" />
+    <Content Include="wwwroot\src\app\components\user-details-view\user-details-view.component.html" />
+    <Content Include="wwwroot\src\favicon.ico" />
+    <Content Include="wwwroot\src\index.html" />
+    <Content Include="wwwroot\src\manifest.json" />
+    <Content Include="wwwroot\src\ngsw-config.json" />
+    <Content Include="wwwroot\src\tsconfig.app.json" />
+    <Content Include="wwwroot\src\tsconfig.spec.json" />
+    <Content Include="wwwroot\tsconfig.json" />
+    <Content Include="wwwroot\tslint.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\.editorconfig" />
+    <None Include="wwwroot\karma.conf.js" />
+    <None Include="wwwroot\protractor.conf.js" />
+    <None Include="wwwroot\README.md" />
+    <None Include="wwwroot\src\app\app.component.scss" />
+    <None Include="wwwroot\src\app\components\access-denied\access-denied.component.scss" />
+    <None Include="wwwroot\src\app\components\add-job-view\add-job-view.component.scss" />
+    <None Include="wwwroot\src\app\components\admin-view\admin-view.component.scss" />
+    <None Include="wwwroot\src\app\components\calendar-view\calendar-view.component.scss" />
+    <None Include="wwwroot\src\app\components\conference-card\conference-card.component.scss" />
+    <None Include="wwwroot\src\app\components\conference-view\conference-view.component.scss" />
+    <None Include="wwwroot\src\app\components\create-conference-view\create-conference-view.component.scss" />
+    <None Include="wwwroot\src\app\components\forgot-password-view\forgot-password-view.component.scss" />
+    <None Include="wwwroot\src\app\components\import-candidates-modal\import-candidates-modal.component.scss" />
+    <None Include="wwwroot\src\app\components\import-jobs-modal\import-jobs-modal.component.scss" />
+    <None Include="wwwroot\src\app\components\job-detail-modal\job-detail-modal.component.scss" />
+    <None Include="wwwroot\src\app\components\login-view\login-view.component.scss" />
+    <None Include="wwwroot\src\app\components\match-conference-view\match-conference-view.component.scss" />
+    <None Include="wwwroot\src\app\components\page-not-found\page-not-found.component.scss" />
+    <None Include="wwwroot\src\app\components\participant-card\participant-card.component.scss" />
+    <None Include="wwwroot\src\app\components\post-to-bullhorn-modal\post-to-bullhorn-modal.component.scss" />
+    <None Include="wwwroot\src\app\components\print-and-save-conference-view\print-and-save-conference-view.component.scss" />
+    <None Include="wwwroot\src\app\components\register-view\register-view.component.scss" />
+    <None Include="wwwroot\src\app\components\schedule-conference-view\schedule-conference-view.component.scss" />
+    <None Include="wwwroot\src\app\components\settings-view\settings-view.component.scss" />
+    <None Include="wwwroot\src\app\components\user-details-view\user-details-view.component.scss" />
+    <None Include="wwwroot\src\assets\.gitkeep" />
+    <None Include="wwwroot\src\styles.scss" />
+    <None Include="wwwroot\src\_reset.scss" />
+    <None Include="wwwroot\src\_variables.scss" />
+    <None Include="wwwroot\yarn.lock" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\e2e\app.e2e-spec.ts" />
+    <TypeScriptCompile Include="wwwroot\e2e\app.po.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\app-routing.module.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\app.component.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\app.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\app.module.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\access-denied\access-denied.component.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\access-denied\access-denied.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\add-job-view\add-job-view.component.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\add-job-view\add-job-view.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\admin-view\admin-view.component.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\admin-view\admin-view.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\calendar-view\calendar-view.component.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\calendar-view\calendar-view.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\conference-card\conference-card.component.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\conference-card\conference-card.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\conference-view\conference-view.component.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\conference-view\conference-view.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\create-conference-view\create-conference-view.component.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\create-conference-view\create-conference-view.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\forgot-password-view\forgot-password-view.component.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\forgot-password-view\forgot-password-view.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\import-candidates-modal\import-candidates-modal.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\import-jobs-modal\import-jobs-modal.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\index.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\job-detail-modal\job-detail-modal.component.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\job-detail-modal\job-detail-modal.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\login-view\login-view.component.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\login-view\login-view.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\match-conference-view\match-conference-view.component.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\match-conference-view\match-conference-view.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\page-not-found\page-not-found.component.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\page-not-found\page-not-found.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\participant-card\participant-card.component.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\participant-card\participant-card.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\post-to-bullhorn-modal\post-to-bullhorn-modal.component.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\post-to-bullhorn-modal\post-to-bullhorn-modal.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\print-and-save-conference-view\print-and-save-conference-view.component.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\print-and-save-conference-view\print-and-save-conference-view.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\register-view\register-view.component.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\register-view\register-view.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\schedule-conference-view\schedule-conference-view.component.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\schedule-conference-view\schedule-conference-view.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\settings-view\settings-view.component.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\settings-view\settings-view.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\components\user-details-view\user-details-view.component.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\models\auth-response.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\models\bullhorn.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\models\conference.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\models\icredentials.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\models\index.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\models\iregistration.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\models\registration.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\models\user.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\services\account.service.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\services\account.service.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\services\auth-guard.service.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\services\auth-guard.service.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\services\base.service.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\services\base.service.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\services\bullhorn-api.service.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\services\conference.service.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\services\conference.service.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\services\config.service.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\services\config.service.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\services\index.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\services\login.service.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\services\login.service.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\services\resolver.service.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\services\resolver.service.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\services\role-guard.service.spec.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\services\role-guard.service.ts" />
+    <TypeScriptCompile Include="wwwroot\src\app\sharedModules\material-module.ts" />
+    <TypeScriptCompile Include="wwwroot\src\environments\environment.prod.ts" />
+    <TypeScriptCompile Include="wwwroot\src\environments\environment.ts" />
+    <TypeScriptCompile Include="wwwroot\src\main.ts" />
+    <TypeScriptCompile Include="wwwroot\src\polyfills.ts" />
+    <TypeScriptCompile Include="wwwroot\src\test.ts" />
+    <TypeScriptCompile Include="wwwroot\src\typings.d.ts" />
+  </ItemGroup>
+
+  <Target Name="DebugRunNgBuild" BeforeTargets="Build" Condition="'$(Configuration)' == 'Debug'"> <!--  And !Exists('wwwroot\dist')  -->
+    <Message Condition="'$(DotNetWatchBuild)'!='true'" Importance="high" Text="dotnet-watch not enabled. To enable, re-run with 'dotnet watch run'" />
+    <!-- Ensure Node.js is installed -->
+    <Message Importance="high" Text="Checking nodejs version installed:" />
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    
+  </Target>
+
+    <Target Name="QABuild" BeforeTargets="Build" Condition="'$(Configuration)' == 'QA'"> <!-- "'$(Configuration)' == 'Production'" -->
+<!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    
+    <!-- Ensure Yarn.js is installed -->
+    <Exec Command="yarn -v" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="YarnErrorCode" />
+    </Exec>
+    <Error Condition="'$(YarnErrorCode)' != '0'" Text="This project is configured to use yarn for package management. To continue, please install yarn from https://yarnpkg.com/, and then restart your command prompt or IDE." />
+    
+    <Message Importance="high" Text="Performing package installs with Yarn" />
+    <exec command="yarn" WorkingDirectory="$(FrontEndLocalPath)" />
+    <Message Importance="high" Text="Performing Ng-CLI build..." />
+    <Exec Command="yarn build-qa-http" WorkingDirectory="$(FrontEndLocalPath)" />
+    <ItemGroup>
+      <DistFiles Include="wwwroot\dist\**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="ProdBuild" BeforeTargets="Build" Condition="'$(Configuration)' == 'Release'"> <!-- "'$(Configuration)' == 'Production'" -->
+<!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    
+    <!-- Ensure Yarn.js is installed -->
+    <Exec Command="yarn -v" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="YarnErrorCode" />
+    </Exec>
+    <Error Condition="'$(YarnErrorCode)' != '0'" Text="This project is configured to use yarn for package management. To continue, please install yarn from https://yarnpkg.com/, and then restart your command prompt or IDE." />
+    
+    <Message Importance="high" Text="Performing package installs with Yarn" />
+    <exec command="yarn" WorkingDirectory="$(FrontEndLocalPath)" />
+    <Message Importance="high" Text="Performing Ng-CLI build..." />
+    <Exec Command="yarn build-prod-ngsw" WorkingDirectory="$(FrontEndLocalPath)" />
+    <ItemGroup>
+      <DistFiles Include="wwwroot\dist\**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+
+</Project>

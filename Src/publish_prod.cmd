@@ -1,0 +1,1 @@
+dotnet publish ./LucasGroup.MCS/LucasGroup.MCS.csproj -f netcoreapp2.1 -c Release -o ../deploy/prod
