@@ -18,24 +18,15 @@ using System.Text;
 namespace LucasGroup.MCS.Interfaces {
 
     public class BullhornApiInterface {
-
         private BullhornApiSettings _settings;
-
         private static FlurlClient _httpClient = new FlurlClient();
         private readonly StringContent _blankContent = new StringContent("");
-
         private AccessTokenResponse _accessResponse;
-
         private TaskCompletionSource<AccessTokenResponse> tcsAccess = new TaskCompletionSource<AccessTokenResponse>();
-
         private RestTokenResponse _tokenDetails;
-
         private TaskCompletionSource<RestTokenResponse> tcsRestToken;
-
         private List<HttpStatusCode> _validStatusList = new List<HttpStatusCode>(new[] {HttpStatusCode.OK, HttpStatusCode.InternalServerError});
-
         private ILogger<BullhornApiInterface> _logger;
-
         private DateTime _authTimeStamp;
 
         public DateTime TokenExpiresIn
@@ -358,8 +349,8 @@ namespace LucasGroup.MCS.Interfaces {
                     return true;
                 });
             }
-            return _url;
 
+            return _url;
 
         }
 
@@ -389,7 +380,6 @@ namespace LucasGroup.MCS.Interfaces {
                     return true;
                 });
             }
-
         }
 
         public async Task GetRestToken()

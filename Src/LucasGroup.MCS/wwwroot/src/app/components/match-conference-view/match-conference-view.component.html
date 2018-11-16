@@ -89,7 +89,9 @@
       <div class="candidates-selected-table-section">
         <div class="candidates-selected-table-container">
           <div class="candidates-selected-table">
-            <div class="candidates-selected-table-title" *ngIf="candidates && jobs">{{listOfSelectedCandidates.length}} Candidates selected for {{listOfSelectedJobs.length}} Job{{listOfSelectedJobs.length
+            <!-- <div class="candidates-selected-table-title" *ngIf="candidates && jobs">{{listOfSelectedCandidates.length}} Candidates selected for {{listOfSelectedJobs.length}} Job{{listOfSelectedJobs.length
+              > 0 ? 's' : ''}}</div> -->
+            <div class="candidates-selected-table-title" *ngIf="candidates && jobs">{{selectedCandidates.length}} Candidates selected for {{selectedJobs.length}} Job{{selectedJobs.length
               > 0 ? 's' : ''}}</div>
             <div class="example-container mat-elevation-z8">
               <mat-table #table [dataSource]="dataSource" matSort>

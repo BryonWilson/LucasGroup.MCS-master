@@ -57,8 +57,7 @@ export class SelectionDataEffects {
     tap(([actions, selectionDataState]) => {
 // console.log('selectionDataState', selectionDataState);
       this.localStorageService.setItem(SELECTIONDATA_KEY, selectionDataState);
-    }
-    )
+    })
   );
 
   @Effect()

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
-
 using Newtonsoft.Json;
 
 using LucasGroup.MCS.Interfaces;

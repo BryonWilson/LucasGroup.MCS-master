@@ -106,8 +106,10 @@ export class MatchConferenceViewComponent
   dataSource: SelectionTableDatasource;
 
   // These are only being used for their lengths
-  listOfSelectedCandidates = [];
-  listOfSelectedJobs = [];
+  // listOfSelectedCandidates = [];
+  // listOfSelectedJobs = [];
+  selectedCandidates = [];
+  selectedJobs = [];
 
   static createSelectionTableData(): SelectionTableData {
     return {
@@ -174,66 +176,18 @@ export class MatchConferenceViewComponent
     this.user = this._loginService.getCurrentUser();
     this.persistence = this._configService.getPersistence();
 
-    // this.store
-    //   .pipe(select(selectSelectionDataState), takeUntil(this.unsubscribe$))
-    //   .subscribe(state => (this.selectionState = state));
-
     this.store.dispatch(new fromActions.LoadSelectionDataElements());
 
     this.store
       .pipe(select(selectSelectionDataState), takeUntil(this.unsubscribe$))
       .subscribe(state => (this.selectionState = state));
 
-    this.allSelectionData$ = this.store.pipe(select(selectAllSelectionData));
-    this.selectionDataCnt$ = this.store.select(selectionDataCount);
+    // this.allSelectionData$ = this.store.pipe(select(selectAllSelectionData));
     this.allSelectionData$ = this.store.select(selectAllSelectionData);
+    this.selectionDataCnt$ = this.store.select(selectionDataCount);
     this.selectionDataIds$ = this.store.select(selectSelectionDataIds);
     this.selectionDataById$ = this.store.select(selectCurrentSelectionData);
     this.selectedTotal$ = this.store.select(selectSelectedTotal);
-
-    // this.store
-    // .pipe(select(selectAllSelectionData), takeUntil(this.unsubscribe$))
-    // .subscribe(data => {
-    //   this.selectionData = data;
-    //   this.store.dispatch(new fromActions.PersistSelectionDataElements({ selectionData: data }));
-    //   // if (!this.persistence) {
-    //   //   this.store.dispatch(new fromActions.PersistSelectionDataElements({ selectionData: data }));
-    //   // } else {
-    //   //   this.store.dispatch(new fromActions.PersistSelectionDataElements({ selectionData: this.selectionData }));
-    //   // }
-    // });
-
-    // this.allSelectionData$ = this.store.pipe(select(selectAllSelectionData));
-    // this.allSelectionData$
-    //   .subscribe(data => {
-    //       this.selectionData = data as SelectionTableData[];
-    //   });
-
-    // this.store
-    //   .pipe(select(selectAllSelectionData), takeUntil(this.unsubscribe$))
-    //   .subscribe(data => (this.selectionData = data));
-
-    // this.store
-    //   .pipe(select(selectAllSelectionData))
-    //   .subscribe(data => {
-    //     this.selectionData = data;
-    //     // this.store.dispatch(new fromActions.PersistSelectionDataElements({ selectionData: data }));
-    // });
-
-    // this.store
-    //   .pipe(select(selectAllSelectionData))
-    //   .subscribe(data => {
-    //     this.selectionData = data;
-    //     this.store.dispatch(new fromActions.PersistSelectionDataElements({ selectionData: data }));
-    // });
-
-    // this.store
-    //   .pipe(select(selectAllSelectionData), takeUntil(this.unsubscribe$))
-    //   .subscribe(data => (this.selectionData = data));
-
-    // this.store
-    //   .pipe(select(selectSelectionDataState), takeUntil(this.unsubscribe$))
-    //   .subscribe(state => (this.selectionState = state));
 
     this.store
       .pipe(select(selectAllSelectionData), takeUntil(this.unsubscribe$))
@@ -242,6 +196,30 @@ export class MatchConferenceViewComponent
     this.store
       .pipe(select(selectSelectedTotal), takeUntil(this.unsubscribe$))
       .subscribe(value => (this.selectedTotal = value));
+
+    this.store
+      .pipe(select(selectAllSelectionData), takeUntil(this.unsubscribe$))
+      .subscribe(value => {
+        this.selectedCandidates = [];
+        value.forEach(ele => {
+          if (this.selectedCandidates.indexOf(ele.candidateId) === -1) {
+            this.selectedCandidates.push(ele.candidateId);
+          }
+        });
+      }
+    );
+
+    this.store
+      .pipe(select(selectAllSelectionData), takeUntil(this.unsubscribe$))
+      .subscribe(value => {
+        this.selectedJobs = [];
+        value.forEach(ele => {
+          if (this.selectedJobs.indexOf(ele.jobOrderId) === -1) {
+            this.selectedJobs.push(ele.jobOrderId);
+          }
+        });
+      }
+    );
 
     // this.store
     //   .pipe(select(selectAllSelectionData), takeUntil(this.unsubscribe$))
@@ -351,13 +329,8 @@ export class MatchConferenceViewComponent
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    // const numSelected = this.selectionData.filter(ele => ele.selected === true).length;
-    // const numRows = this.selectionData.length;
-    // return numSelected === numRows;
     this.selectedTotal = this.allSelectionData.filter(ele => ele.selected === true).length;
     let retVal = false;
-    // const numRows = this.allSelectionData.length;
-    // retVal = (numRows === this.selectedTotal);
     if (this.selectionState && this.selectedTotal) {
       const numRows = this.selectionState.ids.length;
       retVal = (numRows === this.selectedTotal);
@@ -467,8 +440,8 @@ export class MatchConferenceViewComponent
 
   handleAddCandidateClick() {
     let matchObject = {};
-    console.log('selectedCandidate', this.selectedCandidate);
-    console.log('selectedCandidate.candidate', this.selectedCandidate.candidate);
+    // console.log('selectedCandidate', this.selectedCandidate);
+    // console.log('selectedCandidate.candidate', this.selectedCandidate.candidate);
     const jobOrderId = Number.parseInt(this.selectedJob.bullhornJobOrderId, null);
     const currentDateTime = new Date;
     if (this.currentCandidateData && this.currentJobData) {
@@ -481,9 +454,7 @@ export class MatchConferenceViewComponent
         }`,
         userId: this.user.bullhornUserId,
         conferenceId: this.selectedCandidate.conferenceId,
-        // jobOrderId: this.selectedJob.id,
         jobOrderId: jobOrderId,
-        // candidateId: this.selectedCandidate.candidate.id,
         candidateId: this.selectedCandidate.candidate.bullhornCandidateId,
         duration: this.selectedJob.durationWeeks || 0,
         interviewerFirstName: this.selectedClient.clientContact.firstName,
@@ -581,15 +552,13 @@ export class MatchConferenceViewComponent
       this.postMatch(this.selectedJob.id, matchObject);
     }
 
-    if (
-      this.listOfSelectedCandidates.every(i => i !== this.selectedCandidate)
-    ) {
-      this.listOfSelectedCandidates.push(this.selectedCandidate);
-    }
+//     if (this.listOfSelectedCandidates.every(i => i !== this.selectedCandidate)) {
+//       this.listOfSelectedCandidates.push(this.selectedCandidate);
+//     }
 
-    if (this.listOfSelectedJobs.every(i => i !== this.selectedJob)) {
-      this.listOfSelectedJobs.push(this.selectedJob);
-    }
+//     if (this.listOfSelectedJobs.every(i => i !== this.selectedJob)) {
+//       this.listOfSelectedJobs.push(this.selectedJob);
+//     }
 
     // console.log('SELECT TABLE:', this.selectionData);
     console.log('SELECT TABLE:', this.selectionState.entities);
@@ -600,58 +569,59 @@ export class MatchConferenceViewComponent
     let matchObject = {};
     const currentDateTime = new Date;
 
-    this.allSelectionData$.subscribe(entities => {
-      entities.forEach(entity => {
-        if (entity.selected) {
-          console.log('selectData: ' + entity);
-          matchObject = {
-            candidateId: entity.candidateId.toString(),
-            ownerId: entity.userId.toString(),
-            conferenceId: entity.conferenceId.toString(),
-            timeSlot: moment(
-                              // moment(this.startDate.value)
-                              moment(currentDateTime)
-                              // .format('YYYY-MM-DDThh:mm:ss')
-                              // .toLocaleString()
-                              // ).valueOf(),
-                            ).toDate(),
-            duration: entity.duration || 0,
-            interviewerFirstName: entity.interviewerFirstName,
-            interviewerLastName: entity.interviewerLastName
-            // clientId: this.selectedClient.id,
-            // clientContactId: this.selectedClient.clientContact.id,
-            // dateBegin: moment(
-            //                   // moment(this.startDate.value)
-            //                   moment(currentDateTime)
-            //                   .format('YYYY-MM-DDThh:mm:ss')
-            //                   .toLocaleString()
-            //                 ).valueOf(),
-            // dateEnd: moment(
-            //                   // moment(this.startDate.value)
-            //                   moment(currentDateTime)
-            //                   .add(Number(this.defaultSessionInterval), 'minutes')
-            //                   .format('YYYY-MM-DDThh:mm:ss')
-            //                   .toLocaleString()
-            //                 ).valueOf()
-          };
+    // this.allSelectionData$.forEach(entities => {
+    //   entities.forEach(entity => {
+    this.allSelectionData.forEach(ele => {
+      if (ele.selected) {
+        console.log('selectData: ' + ele);
+        matchObject = {
+          candidateId: ele.candidateId.toString(),
+          ownerId: ele.userId.toString(),
+          conferenceId: ele.conferenceId.toString(),
+          timeSlot: moment(
+                            // moment(this.startDate.value)
+                            moment(currentDateTime)
+                            // .format('YYYY-MM-DDThh:mm:ss')
+                            // .toLocaleString()
+                            // ).valueOf(),
+                          ).toDate(),
+          duration: ele.duration || 0,
+          interviewerFirstName: ele.interviewerFirstName,
+          interviewerLastName: ele.interviewerLastName
+          // clientId: this.selectedClient.id,
+          // clientContactId: this.selectedClient.clientContact.id,
+          // dateBegin: moment(
+          //                   // moment(this.startDate.value)
+          //                   moment(currentDateTime)
+          //                   .format('YYYY-MM-DDThh:mm:ss')
+          //                   .toLocaleString()
+          //                 ).valueOf(),
+          // dateEnd: moment(
+          //                   // moment(this.startDate.value)
+          //                   moment(currentDateTime)
+          //                   .add(Number(this.defaultSessionInterval), 'minutes')
+          //                   .format('YYYY-MM-DDThh:mm:ss')
+          //                   .toLocaleString()
+          //                 ).valueOf()
+        };
 
-          console.log('MATCH OBJ', matchObject);
-          // this.deleteMatch(this.selectedJob.bullhornJobOrderId, matchObject);
-          this.deleteMatch(entity.jobOrderId.toString(), matchObject);
-          this.deleteSelectionData(entity.id);
-          // console.log('SelectionData Count :' + this.selectionData.length);
-          console.log('SelectionData Count :' + this.selectionState.ids.length);
-        }
-      });
+        console.log('MATCH OBJ', matchObject);
+        // this.deleteMatch(this.selectedJob.bullhornJobOrderId, matchObject);
+        this.deleteMatch(ele.jobOrderId.toString(), matchObject);
+        this.deleteSelectionData(ele.id);
+        // console.log('SelectionData Count :' + this.selectionData.length);
+        console.log('SelectionData Count :' + this.selectionState.ids.length);
+      }
+      // });
     });
 
-    if (this.listOfSelectedCandidates.every(i => i !== this.selectedCandidate)) {
-      this.listOfSelectedCandidates.push(this.selectedCandidate);
-    }
+//     if (this.listOfSelectedCandidates.every(i => i !== this.selectedCandidate)) {
+//       this.listOfSelectedCandidates.push(this.selectedCandidate);
+//     }
 
-    if (this.listOfSelectedJobs.every(i => i !== this.selectedJob)) {
-      this.listOfSelectedJobs.push(this.selectedJob);
-    }
+//     if (this.listOfSelectedJobs.every(i => i !== this.selectedJob)) {
+//       this.listOfSelectedJobs.push(this.selectedJob);
+//     }
 
     // console.log('SELECT TABLE:', this.selectionData);
     console.log('SELECT TABLE:', this.selectionState.entities);
